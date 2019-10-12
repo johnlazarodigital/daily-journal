@@ -100,4 +100,20 @@ class Daily_Journal_Public {
 
 	}
 
+	public function register_shortcodes() {
+
+		add_shortcode( 'daily-journal', array( $this, 'shortcode_daily_journal' ) );
+
+	}
+
+	public function shortcode_daily_journal( $atts ){
+		
+		ob_start();
+
+		include plugin_dir_path( __FILE__ ) . 'partials/shortcode-daily-journal.php';
+	
+		return ob_get_clean();
+	
+	}
+
 }

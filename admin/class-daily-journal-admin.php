@@ -126,7 +126,7 @@ class Daily_Journal_Admin {
         global $post_type;
         
         if( $post_type == 'journal-items' )
-            return get_the_time('U', true);
+            return current_time('timestamp');
         
     }
 
