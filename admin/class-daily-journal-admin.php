@@ -129,5 +129,5 @@ class Daily_Journal_Admin {
             return current_time('timestamp');
         
     }
-
+    
 }
