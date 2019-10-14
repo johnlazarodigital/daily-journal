@@ -100,17 +100,43 @@ class Daily_Journal_Public {
 
 	}
 
+	/**
+	 * Register plugin shortcodes.
+	 *
+	 * @since    1.0.0
+	 */
 	public function register_shortcodes() {
 
 		add_shortcode( 'daily-journal', array( $this, 'shortcode_daily_journal' ) );
 
 	}
 
+	/**
+	 * Output shortcode [daily-journal] content.
+	 *
+	 * @since    1.0.0
+	 */
 	public function shortcode_daily_journal( $atts ){
 		
 		ob_start();
 
-		include plugin_dir_path( __FILE__ ) . 'partials/shortcode-daily-journal.php';
+		$action = $_GET['action'];
+
+		switch($action) {
+			case 'new_post':
+				$template_path = 'daily-journal-new-post.php';
+				break;
+
+			case 'edit_post':
+				$template_path = 'daily-journal-edit-post.php';
+				break;
+			
+			default:
+				$template_path = 'daily-journal-posts.php';
+				break;
+		}
+
+		include plugin_dir_path( __FILE__ ) . 'partials/' . $template_path;
 	
 		return ob_get_clean();
 	
