@@ -17,4 +17,4 @@
 
 Journal posts here...
 
-<a href="?action=new_post">Post New Journal</a>
+<a href="?daijou_action=new_post">Post New Journal</a>

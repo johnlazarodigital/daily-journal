@@ -18,8 +18,8 @@
 <form method="post">
 
 	<input type="hidden" name="daijou_form_action" value="daijou_form_new_post">
-	<input type="text" name="title" placeholder="Title">
-	<textarea name="content" placeholder="Content"></textarea>
+	<input type="text" name="title" placeholder="Title" required><br><br>
+	<textarea name="content" placeholder="Content" required></textarea><br>
 	
 	<button type="submit">Post</button>
 	

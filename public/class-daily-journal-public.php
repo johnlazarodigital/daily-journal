@@ -116,11 +116,11 @@ class Daily_Journal_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function shortcode_daily_journal( $atts ){
-		
+	public function shortcode_daily_journal( $atts ) {
+
 		ob_start();
 
-		$action = $_GET['action'];
+		$action = $_GET['daijou_action'];
 
 		switch($action) {
 			case 'new_post':
@@ -129,6 +129,10 @@ class Daily_Journal_Public {
 
 			case 'edit_post':
 				$template_path = 'daily-journal-edit-post.php';
+				break;
+
+			case 'posts':
+				$template_path = 'daily-journal-posts.php';
 				break;
 			
 			default:
@@ -140,6 +144,54 @@ class Daily_Journal_Public {
 	
 		return ob_get_clean();
 	
+	}
+
+	/**
+	 * Handle form submissions.
+	 *
+	 * @since    1.0.0
+	 */
+	public function handle_form_submissions() {
+
+		global $wp;
+		global $wpdb;
+
+		if( $_POST ) {
+
+			if( $_POST['daijou_form_action'] == 'daijou_form_new_post' ) {
+
+				$title = sanitize_text_field( $_POST['title'] );
+				$content = sanitize_textarea_field( $_POST['content'] );
+
+				$table_name = $wpdb->prefix . 'daijou_journal_items';
+
+				$result = $wpdb->query( $wpdb->prepare( 
+					"
+					INSERT INTO $table_name
+					( title, content )
+					VALUES ( %s, %s )
+					", 
+				    $title, 
+					$content
+				) );
+
+				if( $result !== FALSE ) {
+
+					$current_url = home_url() . add_query_arg( $wp->query_vars );
+
+					$posts_url = add_query_arg( array(
+					    'daijou_action' => 'posts'
+					), $current_url );
+
+					wp_redirect( $posts_url );
+					exit;
+
+				} else
+					echo '<p>There\'s an error on form submission.</p>';
+
+			}
+		}
+
 	}
 
 }

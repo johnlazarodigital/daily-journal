@@ -54,7 +54,7 @@ class Daily_Journal_Activator {
             id bigint(9) NOT NULL AUTO_INCREMENT,
             title text NOT NULL,
             content longtext NOT NULL,
-            date_posted timestamp NOT NULL,
+            date_posted timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY  (id)
         ) $charset_collate;";
 
