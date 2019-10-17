@@ -153,8 +153,7 @@ class Daily_Journal_Public {
 	 */
 	public function handle_form_submissions() {
 
-		global $wp;
-		global $wpdb;
+		global $wp, $wpdb;
 
 		if( $_POST ) {
 

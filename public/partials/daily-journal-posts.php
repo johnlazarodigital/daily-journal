@@ -15,6 +15,55 @@
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
-Journal posts here...
+<div class="daijou-wrapper">
 
-<a href="?daijou_action=new_post">Post New Journal</a>
+	<p>
+		<a href="?daijou_action=new_post">Post New Journal</a>
+	</p>
+
+	<?php 
+
+	global $wpdb;
+
+	$table_name = $wpdb->prefix . 'daijou_journal_items';
+
+	$results = $wpdb->get_results(
+		"
+		SELECT *
+		FROM $table_name
+		",
+		OBJECT
+	);
+
+	?>
+
+	<?php if( $results ) : ?>
+
+		<?php foreach( $results as $item ): ?>
+
+			<?php
+
+			$unix_date_posted = strtotime($item->date_posted);
+
+			$date_posted = date( 'F m, Y h:i a', $unix_date_posted );
+
+			?>
+
+			<div class="daijou-item">
+				<div class="daijou-item-datetime"><?php echo $date_posted; ?></div>
+				<p class="daijou-item-content"><?php echo $item->content; ?></p>
+				<ul class="daijou-actions">
+					<li>
+						<a href="?daijou_action=edit_post&post_id=<?php echo $item->id; ?>">Edit post</a>
+					</li>
+					<li>
+						<a href="#">Delete post</a>
+					</li>
+				</ul>
+			</div>
+
+		<?php endforeach; ?>
+
+	<?php endif; ?>
+
+</div>

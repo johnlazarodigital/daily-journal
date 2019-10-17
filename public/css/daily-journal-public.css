@@ -2,3 +2,55 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ .daijou-wrapper {
+    height: auto;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    position: static;
+    text-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    line-height: 32px;
+    border-radius: 0;
+    box-sizing: content-box;
+    transition: none;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+ }
+
+ .daijou-item {
+	background: #fff;
+	border: 1px solid black;
+	padding: 20px;
+}
+
+.daijou-item .daijou-item-datetime {
+ 	margin-bottom: 10px;
+ 	font-weight: 600;
+ 	font-size: 19px;
+ }
+
+.daijou-item .daijou-item-content {
+    margin-bottom: 10px;
+    line-height: 28px;
+}
+
+.daijou-item + .daijou-item {
+	margin-top: 30px;
+}
+
+ul.daijou-actions {
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul.daijou-actions li + li {
+	margin-left: 20px;
+}
