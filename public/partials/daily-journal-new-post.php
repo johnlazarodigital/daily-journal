@@ -15,12 +15,15 @@
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
-<form method="post">
+<div class="daijou-wrapper">
 
-	<input type="hidden" name="daijou_form_action" value="daijou_form_new_post">
-	<input type="text" name="title" placeholder="Title" required><br><br>
-	<textarea name="content" placeholder="Content" required></textarea><br>
-	
-	<button type="submit">Post</button>
-	
-</form>
+	<form method="post">
+
+		<input type="hidden" name="daijou_form_action" value="daijou_form_new_post">
+		<textarea name="content" placeholder="Content" required></textarea><br>
+		
+		<button type="submit">Post</button>
+		
+	</form>
+
+</div>

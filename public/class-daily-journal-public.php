@@ -40,6 +40,8 @@ class Daily_Journal_Public {
 	 */
 	private $version;
 
+	private $formMessage;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -139,6 +141,8 @@ class Daily_Journal_Public {
 				$template_path = 'daily-journal-posts.php';
 				break;
 		}
+		
+		$form_message = $this->getFormMessage();
 
 		include plugin_dir_path( __FILE__ ) . 'partials/' . $template_path;
 	
@@ -167,10 +171,9 @@ class Daily_Journal_Public {
 				$result = $wpdb->query( $wpdb->prepare( 
 					"
 					INSERT INTO $table_name
-					( title, content )
-					VALUES ( %s, %s )
-					", 
-				    $title, 
+					( content )
+					VALUES ( %s )
+					",
 					$content
 				) );
 
@@ -189,8 +192,49 @@ class Daily_Journal_Public {
 					echo '<p>There\'s an error on form submission.</p>';
 
 			}
+
+			if( $_POST['daijou_form_action'] == 'daijou_form_edit_post' ) {
+
+				$post_id = sanitize_text_field( $_POST['post_id'] );
+				$content = sanitize_textarea_field( $_POST['content'] );
+
+				$table_name = $wpdb->prefix . 'daijou_journal_items';
+
+				$result = $wpdb->query( $wpdb->prepare( 
+					"
+					UPDATE $table_name
+					SET content = %s
+					WHERE id = %d
+					", 
+				    $content, 
+					$post_id
+				) );
+
+				if( $result !== FALSE ) {
+					$is_success = true;
+					$message = 'Post successfully updated!';
+				} else {
+					$is_success = false;
+					$message = 'There\'s an error on form submission.';
+				}
+
+				$this->setFormMessage( array(
+					'is_success' => $is_success,
+					'message' => $message
+				) );
+
+			}
+
 		}
 
+	}
+
+	public function setFormMessage($formMessage) {
+		$this->formMessage = $formMessage;
+	}
+
+	public function getFormMessage() {
+		return $this->formMessage;
 	}
 
 }
