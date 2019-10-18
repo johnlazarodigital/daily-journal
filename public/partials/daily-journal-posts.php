@@ -33,6 +33,7 @@
 		"
 		SELECT *
 		FROM $table_name
+		ORDER BY date_posted DESC
 		",
 		OBJECT
 	);
