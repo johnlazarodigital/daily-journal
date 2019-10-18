@@ -141,7 +141,7 @@ class Daily_Journal_Public {
 				$template_path = 'daily-journal-posts.php';
 				break;
 		}
-		
+
 		$form_message = $this->getFormMessage();
 
 		include plugin_dir_path( __FILE__ ) . 'partials/' . $template_path;
@@ -188,8 +188,17 @@ class Daily_Journal_Public {
 					wp_redirect( $posts_url );
 					exit;
 
-				} else
-					echo '<p>There\'s an error on form submission.</p>';
+				} else {
+
+					$is_success = false;
+					$message = 'There\'s an error on form submission.';
+
+					$this->setFormMessage( array(
+						'is_success' => $is_success,
+						'message' => $message
+					) );
+
+				}
 
 			}
 
@@ -230,11 +239,26 @@ class Daily_Journal_Public {
 	}
 
 	public function setFormMessage($formMessage) {
+
 		$this->formMessage = $formMessage;
+
 	}
 
 	public function getFormMessage() {
-		return $this->formMessage;
+
+		$form_message = $this->formMessage;
+
+		if( $form_message['is_success'] )
+			$form_message_class = 'daijou-form-message-success';
+		else
+			$form_message_class = 'daijou-form-message-error';
+	
+		$form_message_output = '<p class="daijou-form-message ' . $form_message_class . '">
+			' . $form_message['message'] . '
+		</p>';
+
+		return $form_message_output;
+	
 	}
 
 }

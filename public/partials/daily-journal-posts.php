@@ -21,7 +21,9 @@
 		<a href="?daijou_action=new_post">Post New Journal</a>
 	</p>
 
-	<?php 
+	<?php
+
+	echo $form_message;
 
 	global $wpdb;
 

@@ -41,18 +41,7 @@
 
 		<form method="post">
 
-			<?php
-
-			if( $form_message['is_success'] )
-				$form_message_class = 'daijou-form-message-success';
-			else
-				$form_message_class = 'daijou-form-message-error';
-			
-			?>
-
-			<p class="daijou-form-message <?php echo $form_message_class; ?>">
-				<?php echo $form_message['message']; ?>
-			</p>
+			<?php echo $form_message; ?>
 
 			<input type="hidden" name="daijou_form_action" value="daijou_form_edit_post">
 			<input type="hidden" name="post_id" value="<?php echo $item->id; ?>">

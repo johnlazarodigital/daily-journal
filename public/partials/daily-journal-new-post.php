@@ -19,6 +19,8 @@
 
 	<form method="post">
 
+		<?php echo $form_message; ?>
+
 		<input type="hidden" name="daijou_form_action" value="daijou_form_new_post">
 		<textarea name="content" placeholder="Content" required></textarea><br>
 		
