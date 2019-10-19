@@ -60,7 +60,7 @@
 						<a href="?daijou_action=edit_post&post_id=<?php echo $item->id; ?>">Edit post</a>
 					</li>
 					<li>
-						<a href="#">Delete post</a>
+						<a href="?daijou_action=delete_post&post_id=<?php echo $item->id; ?>" onclick="return confirm('Are you sure you want to delete this post?');">Delete post</a>
 					</li>
 				</ul>
 			</div>

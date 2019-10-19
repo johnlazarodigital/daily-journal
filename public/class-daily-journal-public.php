@@ -236,6 +236,39 @@ class Daily_Journal_Public {
 
 		}
 
+		if( $_GET ) {
+
+			if( $_GET['daijou_action'] == 'delete_post' ) {
+
+				$post_id = sanitize_text_field( $_GET['post_id'] );
+
+				$table_name = $wpdb->prefix . 'daijou_journal_items';
+
+				$result = $wpdb->query( $wpdb->prepare( 
+					"
+					DELETE FROM $table_name
+					WHERE id = %d
+					", 
+				    $post_id
+				) );
+
+				if( $result !== FALSE ) {
+					$is_success = true;
+					$message = 'Post successfully deleted!';
+				} else {
+					$is_success = false;
+					$message = 'There\'s an error on form submission.';
+				}
+
+				$this->setFormMessage( array(
+					'is_success' => $is_success,
+					'message' => $message
+				) );
+
+			}
+
+		}
+
 	}
 
 	public function setFormMessage($formMessage) {
