@@ -67,6 +67,7 @@ class Daily_Journal {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
+		
 		if ( defined( 'DAILY_JOURNAL_VERSION' ) ) {
 			$this->version = DAILY_JOURNAL_VERSION;
 		} else {
@@ -153,6 +154,8 @@ class Daily_Journal {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Daily_Journal_Admin( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'daijou_update_db_version' );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );

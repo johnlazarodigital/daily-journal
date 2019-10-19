@@ -44,7 +44,7 @@ class Daily_Journal_Activator {
 
         global $wpdb;
 
-        $daijou_db_version = '1.0';
+        $daijou_db_version = '1.0.0';
 
         $table_name = $wpdb->prefix . 'daijou_journal_items';
         

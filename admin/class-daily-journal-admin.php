@@ -129,5 +129,28 @@ class Daily_Journal_Admin {
             return current_time('timestamp');
         
     }
+
+    public function daijou_update_db_version() {
+
+        if( DAILY_JOURNAL_VERSION !== get_option('daijou_db_version') ) {
+
+            global $wpdb;
+
+            $table_name = $wpdb->prefix . 'daijou_journal_items';
+
+            $result = $wpdb->query( 
+                "
+                ALTER TABLE $table_name
+                DROP title;
+                "
+            );
+
+            update_option( 'daijou_db_version', DAILY_JOURNAL_VERSION );
+
+        }
+
+    }
+
+    
     
 }
