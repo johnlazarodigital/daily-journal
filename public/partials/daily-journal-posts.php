@@ -50,6 +50,10 @@
 
 			$date_posted = date( 'F m, Y h:i a', $unix_date_posted );
 
+			$edit_post_link = "?daijou_action=edit_post&post_id=" . $item->id;
+
+			$delete_post_link = wp_nonce_url( '?daijou_action=delete_post&post_id=' . $item->id, 'daijou_form_action', 'daijou_form_delete_post_nonce' );
+
 			?>
 
 			<div class="daijou-item">
@@ -57,10 +61,10 @@
 				<p class="daijou-item-content"><?php echo $item->content; ?></p>
 				<ul class="daijou-actions">
 					<li>
-						<a href="?daijou_action=edit_post&post_id=<?php echo $item->id; ?>">Edit post</a>
+						<a href="<?php echo $edit_post_link; ?>">Edit post</a>
 					</li>
 					<li>
-						<a href="?daijou_action=delete_post&post_id=<?php echo $item->id; ?>" onclick="return confirm('Are you sure you want to delete this post?');">Delete post</a>
+						<a href="<?php echo $delete_post_link; ?>" onclick="return confirm( 'Are you sure you want to delete this post?' )">Delete post</a>
 					</li>
 				</ul>
 			</div>

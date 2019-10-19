@@ -163,68 +163,96 @@ class Daily_Journal_Public {
 
 			if( $_POST['daijou_form_action'] == 'daijou_form_new_post' ) {
 
-				$title = sanitize_text_field( $_POST['title'] );
-				$content = sanitize_textarea_field( $_POST['content'] );
+				if ( 
+				    isset( $_POST['daijou_form_new_post_nonce'] ) 
+				    && wp_verify_nonce( $_POST['daijou_form_new_post_nonce'], 'daijou_form_action' ) 
+				) {
 
-				$table_name = $wpdb->prefix . 'daijou_journal_items';
+					$title = sanitize_text_field( $_POST['title'] );
+					$content = sanitize_textarea_field( $_POST['content'] );
 
-				$result = $wpdb->query( $wpdb->prepare( 
-					"
-					INSERT INTO $table_name
-					( content )
-					VALUES ( %s )
-					",
-					$content
-				) );
+					$table_name = $wpdb->prefix . 'daijou_journal_items';
 
-				if( $result !== FALSE ) {
+					$result = $wpdb->query( $wpdb->prepare( 
+						"
+						INSERT INTO $table_name
+						( content )
+						VALUES ( %s )
+						",
+						$content
+					) );
 
-					$current_url = home_url() . add_query_arg( $wp->query_vars );
+					if( $result !== FALSE ) {
 
-					$posts_url = add_query_arg( array(
-					    'daijou_action' => 'posts'
-					), $current_url );
+						$current_url = home_url() . add_query_arg( $wp->query_vars );
 
-					wp_redirect( $posts_url );
-					exit;
+						$posts_url = add_query_arg( array(
+						    'daijou_action' => 'posts'
+						), $current_url );
+
+						wp_redirect( $posts_url );
+						exit;
+
+					} else {
+
+						$is_success = false;
+						$message = 'There\'s an error on form submission.';
+
+					}
 
 				} else {
 
 					$is_success = false;
 					$message = 'There\'s an error on form submission.';
 
-					$this->setFormMessage( array(
-						'is_success' => $is_success,
-						'message' => $message
-					) );
-
 				}
+
+				$this->setFormMessage( array(
+					'is_success' => $is_success,
+					'message' => $message
+				) );
 
 			}
 
 			if( $_POST['daijou_form_action'] == 'daijou_form_edit_post' ) {
 
-				$post_id = sanitize_text_field( $_POST['post_id'] );
-				$content = sanitize_textarea_field( $_POST['content'] );
+				if ( 
+				    isset( $_POST['daijou_form_edit_post_nonce'] ) 
+				    && wp_verify_nonce( $_POST['daijou_form_edit_post_nonce'], 'daijou_form_action' ) 
+				) {
 
-				$table_name = $wpdb->prefix . 'daijou_journal_items';
+					$post_id = sanitize_text_field( $_POST['post_id'] );
+					$content = sanitize_textarea_field( $_POST['content'] );
 
-				$result = $wpdb->query( $wpdb->prepare( 
-					"
-					UPDATE $table_name
-					SET content = %s
-					WHERE id = %d
-					", 
-				    $content, 
-					$post_id
-				) );
+					$table_name = $wpdb->prefix . 'daijou_journal_items';
 
-				if( $result !== FALSE ) {
-					$is_success = true;
-					$message = 'Post successfully updated!';
+					$result = $wpdb->query( $wpdb->prepare( 
+						"
+						UPDATE $table_name
+						SET content = %s
+						WHERE id = %d
+						", 
+					    $content, 
+						$post_id
+					) );
+
+					if( $result !== FALSE ) {
+
+						$is_success = true;
+						$message = 'Post successfully updated!';
+
+					} else {
+
+						$is_success = false;
+						$message = 'There\'s an error on form submission.';
+
+					}
+
 				} else {
+
 					$is_success = false;
 					$message = 'There\'s an error on form submission.';
+
 				}
 
 				$this->setFormMessage( array(
@@ -240,24 +268,40 @@ class Daily_Journal_Public {
 
 			if( $_GET['daijou_action'] == 'delete_post' ) {
 
-				$post_id = sanitize_text_field( $_GET['post_id'] );
+				if ( 
+				    isset( $_GET['daijou_form_delete_post_nonce'] ) 
+				    && wp_verify_nonce( $_GET['daijou_form_delete_post_nonce'], 'daijou_form_action' ) 
+				) {
 
-				$table_name = $wpdb->prefix . 'daijou_journal_items';
+					$post_id = sanitize_text_field( $_GET['post_id'] );
 
-				$result = $wpdb->query( $wpdb->prepare( 
-					"
-					DELETE FROM $table_name
-					WHERE id = %d
-					", 
-				    $post_id
-				) );
+					$table_name = $wpdb->prefix . 'daijou_journal_items';
 
-				if( $result !== FALSE ) {
-					$is_success = true;
-					$message = 'Post successfully deleted!';
+					$result = $wpdb->query( $wpdb->prepare( 
+						"
+						DELETE FROM $table_name
+						WHERE id = %d
+						", 
+					    $post_id
+					) );
+
+					if( $result !== FALSE ) {
+
+						$is_success = true;
+						$message = 'Post successfully deleted!';
+
+					} else {
+
+						$is_success = false;
+						$message = 'There\'s an error on form submission.';
+
+					}
+
 				} else {
+
 					$is_success = false;
 					$message = 'There\'s an error on form submission.';
+
 				}
 
 				$this->setFormMessage( array(

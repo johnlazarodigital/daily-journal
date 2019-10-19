@@ -17,6 +17,10 @@
 
 <div class="daijou-wrapper">
 
+	<p>
+		<a href="?daijou_action=posts">Back to posts</a>
+	</p>
+
 	<?php 
 
 	global $wpdb;
@@ -42,6 +46,8 @@
 		<form method="post">
 
 			<?php echo $form_message; ?>
+
+			<?php wp_nonce_field( 'daijou_form_action', 'daijou_form_edit_post_nonce' ); ?>
 
 			<input type="hidden" name="daijou_form_action" value="daijou_form_edit_post">
 			<input type="hidden" name="post_id" value="<?php echo $item->id; ?>">
